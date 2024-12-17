@@ -1,3 +1,4 @@
 all :
 	$(MAKE) -C mlx/
-	gcc main.c -I mlx/ mlx/libmlx.a
+	$(MAKE) -C libft/
+	gcc main.c -I mlx mlx/libmlx_Linux.a libft/libft.a -lXext -lX11 -g

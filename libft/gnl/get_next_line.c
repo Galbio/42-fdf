@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 20:31:23 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/11/13 01:44:56 by gakarbou         ###   ########.fr       */
+/*   Updated: 2024/12/16 19:30:55 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_fill_stash(char *stash, int fd)
 	char	*temp;
 	int		readed;
 
-	dest = ft_strjoin(stash, NULL, 0);
+	dest = ft_stjoin(stash, NULL, 0);
 	if (stash)
 		free(stash);
 	readed = 1;
@@ -35,7 +35,7 @@ char	*ft_fill_stash(char *stash, int fd)
 			return (NULL);
 		}
 		temp[readed] = 0;
-		dest = ft_strjoin(dest, temp, 1);
+		dest = ft_stjoin(dest, temp, 1);
 	}
 	free(temp);
 	return (dest);

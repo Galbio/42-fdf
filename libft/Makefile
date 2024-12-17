@@ -6,12 +6,12 @@
 #    By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/04 16:12:41 by gakarbou          #+#    #+#              #
-#    Updated: 2024/12/11 15:03:46 by gakarbou         ###   ########.fr        #
+#    Updated: 2024/12/17 14:44:37 by gakarbou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc
-FLAGS = -Wall -Wextra -Werror
+CC = gcc
+FLAGS = -Wall -Wextra -Werror -g
 DEBUG_FLAGS = -Wall -Wextra -Werror -g
 
 LIBFT_DIR = libft/

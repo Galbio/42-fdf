@@ -1,42 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   a.c                                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/04 15:14:44 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/17 14:41:47 by gakarbou         ###   ########.fr       */
+/*   Created: 2024/12/17 16:09:30 by gakarbou          #+#    #+#             */
+/*   Updated: 2024/12/17 16:10:49 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <math.h>
+#include <stdio.h>
 
-size_t	ft_strlen(const char *s)
+int	main(void)
 {
-	size_t	i;
-
-	i = 0;
-	while (s[i])
-		i++;
-	return (i);
-}
-
-size_t	ft_strclen(const char *s, char c)
-{
-	size_t	i;
-
-	i = 0;
-	if (!s)
-		return (0);
-	while (s[i] && s[i] != c)
-		i++;
-	return (i);
-}
-
-size_t	ft_securelen(const char *s)
-{
-	if (!s)
-		return (0);
-	return (ft_strlen(s));
+	printf("%f\n", M_PI);
+	printf("%lf\n", M_PI);
 }
