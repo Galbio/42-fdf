@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:30:07 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/18 17:35:55 by gakarbou         ###   ########.fr       */
+/*   Updated: 2024/12/18 18:48:28 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_pixel
 typedef struct s_array_info
 {
 	char	**array;
+	char	*done;
 	int		array_i;
 	int		array_j;
 }	t_array_info;

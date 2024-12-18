@@ -171,8 +171,9 @@ void	draw_array(t_mlx_data *ds, int x, int y, t_line_points p)
 	int				up_factor;
 	int				up_factor_other;
 
-	if ((y >= ds->array.array_j) || (x >= ds->array.array_i))
+	if (ds->array.done[(y * ds->array.array_i) + x])
 		return ;
+	ds->array.done[(y * ds->array.array_i) + x] = 1;
 	save = p;
 	up_factor = ft_atoi(ds->array.array[(ds->array.array_i * y) + x]) * (ds->cam.cam_zoom);
 	p.y1 = p.y0 + get_line_y_coor(ds->cam.cam_zoom, (360 - p.angle) / 2);
@@ -207,7 +208,7 @@ void	draw_array(t_mlx_data *ds, int x, int y, t_line_points p)
 
 int	check_key(int key_pressed, t_mlx_data *ds)
 {
-	static int	angle = 91;
+	static int	angle = 42;
 
 	printf("KEY = %d\n", key_pressed);
 	if (key_pressed == 65307)
@@ -226,26 +227,34 @@ int	check_key(int key_pressed, t_mlx_data *ds)
 		ds->cam.y_offset -= 30;
 	else if (key_pressed == 's')
 		ds->cam.y_offset += 30;
-	else if (key_pressed == '-')
+	else if (key_pressed == 65362)
 		angle--;
-	else if (key_pressed == '=')
+	else if (key_pressed == 65364)
 		angle++;
+	else if (key_pressed == 65451)
+		ds->cam.cam_zoom++;
+	else if (key_pressed == '-')
+		ds->cam.cam_zoom--;
+	else
+		return (0);
+	ds->array.done = ft_calloc(sizeof(char), ds->array.array_i * ds->array.array_j);
 	printf("ANGLE = %d\n", angle);
 	if (ds->img_ptr)
 		mlx_destroy_image(ds->mlx_ptr, (void *)ds->img_ptr);
 	ds->img_ptr = mlx_new_image(ds->mlx_ptr, 1920, 1080);
 	mlx_put_image_to_window(ds->mlx_ptr, ds->win_ptr, ds->img_ptr, 0, 0);
 	draw_array(ds, 0, 0, init_p(angle, ds->cam));
+	free(ds->array.done);
 	return (0);
 }
 
 int	check_mouse(int mouse_button, t_mlx_data *ds)
 {
+	printf("mouse = %d\n", mouse_button);
 	if (mouse_button == 4)
 		ds->cam.cam_zoom += 1;
 	else if (mouse_button == 6)
 		ds->cam.cam_zoom -= 1;
-	//printf("mouse = %d\n", mouse_button);
 }
 
 int	array_len(char **array)
@@ -293,6 +302,7 @@ void	init_ds(t_mlx_data *ds)
 int main(int argc, char **argv)
 {
 	t_mlx_data	ds;
+	int			i;
 
 	parse_values(&ds, argv[1]);
 	ds.mlx_ptr = mlx_init();
@@ -300,9 +310,13 @@ int main(int argc, char **argv)
 	ds.img_ptr = NULL;
 	init_ds(&ds);
 	mlx_loop_hook(ds.mlx_ptr, &test, &ds);
-	mlx_hook(ds.win_ptr, KeyPress, KeyPressMask, &check_key, &ds);
-	mlx_mouse_hook(ds.win_ptr, &check_mouse, &ds);
+	mlx_hook(ds.win_ptr, 2, KeyPressMask, &check_key, &ds);
+	//mlx_hook(ds.win_ptr, 4, ButtonPressMask, &check_mouse, &ds);
 	mlx_loop(ds.mlx_ptr);
 	mlx_destroy_display(ds.mlx_ptr);
 	free(ds.mlx_ptr);
+	i = -1;
+	while (++i < ds.array.array_j)
+		free(ds.array.array[i]);
+	free(ds.array.array);
 }
