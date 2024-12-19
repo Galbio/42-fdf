@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 15:14:44 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/17 14:41:47 by gakarbou         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:11:50 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,16 @@ size_t	ft_securelen(const char *s)
 	if (!s)
 		return (0);
 	return (ft_strlen(s));
+}
+
+size_t	array_len(char **array)
+{
+	size_t	i;
+
+	if (!array)
+		return (0);
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
 }

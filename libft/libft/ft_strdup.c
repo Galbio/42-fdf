@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 11:25:46 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/17 14:36:42 by gakarbou         ###   ########.fr       */
+/*   Updated: 2024/12/19 20:44:43 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,17 @@ char	*ft_strndup(const char *s, size_t n)
 	return (dest);
 }
 
-char	*ft_str_replace_char(const char *s, char target, char replace)
+char	*ft_str_replace_char(char *s, char target, char replace)
 {
-	char	*dest;
-	size_t	len;
 	size_t	i;
 
-	len = ft_strlen(s);
-	dest = malloc((len + 1) * sizeof(char));
-	if (!dest)
-		return (NULL);
 	i = -1;
-	while (++i != len)
+	while (s && s[++i])
 	{
 		if (s[i] == target)
-			dest[i] = replace;
+			s[i] = replace;
 		else
-			dest[i] = s[i];
+			s[i] = s[i];
 	}
-	dest[len] = 0;
-	return (dest);
+	return (s);
 }

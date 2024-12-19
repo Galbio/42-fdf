@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:04:32 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/17 14:42:06 by gakarbou         ###   ########.fr       */
+/*   Updated: 2024/12/19 22:12:20 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char		*ft_securejoin(char const *s1, char const *s2, char fre);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char		*ft_strnstr(const char *big, const char *little, size_t len);
-char		*ft_str_replace_char(const char *str, char target, char replace);
+char		*ft_str_replace_char(char *str, char target, char replace);
 
 void		ft_bzero(void *s, size_t n);
 void		ft_putnbr_fd(int n, int fd);
@@ -80,5 +80,6 @@ int			ft_lstmin(t_list *lst, int (*get_value)(t_list *));
 char		*ft_strndup(const char *s, size_t n);
 size_t		ft_strclen(const char *s, char c);
 size_t		ft_securelen(const char *s);
+size_t		array_len(char **array);
 
 #endif
