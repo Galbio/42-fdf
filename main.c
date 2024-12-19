@@ -151,7 +151,7 @@ t_line_points	init_p(int angle, t_cam_control cam)
 
 	dest.x0 = 650 + cam.x_offset;
 	dest.y0 = 650 + cam.y_offset;
-	dest.angle = fabs(angle % 180);
+	dest.angle = angle;
 	return (dest);
 }
 
@@ -176,10 +176,10 @@ void	draw_array(t_mlx_data *ds, int x, int y, t_line_points p)
 	ds->array.done[(y * ds->array.array_i) + x] = 1;
 	save = p;
 	up_factor = ft_atoi(ds->array.array[(ds->array.array_i * y) + x]) * (ds->cam.cam_zoom);
-	p.y1 = p.y0 + get_line_y_coor(ds->cam.cam_zoom, (360 - p.angle) / 2);
+	p.y1 = p.y0 + get_line_y_coor(ds->cam.cam_zoom, p.angle);
 	if (x < (ds->array.array_i - 1))
 	{
-		p.x1 = p.x0 - get_line_x_coor(ds->cam.cam_zoom, (360 - p.angle) / 2);
+		p.x1 = p.x0 + get_line_x_coor(ds->cam.cam_zoom, p.angle);
 		up_factor_other = ft_atoi(ds->array.array[(ds->array.array_i * y) + x + 1]) * (ds->cam.cam_zoom);
 		p.y0 -= up_factor;
 		p.y1 -= up_factor_other;
@@ -190,10 +190,10 @@ void	draw_array(t_mlx_data *ds, int x, int y, t_line_points p)
 		draw_array(ds, x + 1, y, p);
 		p = save;
 	}
-	p.y1 = p.y0 + get_line_y_coor(ds->cam.cam_zoom, (360 - p.angle) / 2);
+	p.y1 = p.y0 + get_line_y_coor(ds->cam.cam_zoom, (p.angle + 90));
 	if (y < (ds->array.array_j - 1))
 	{
-		p.x1 = p.x0 + get_line_x_coor(ds->cam.cam_zoom, (360 - p.angle) / 2);
+		p.x1 = p.x0 + get_line_x_coor(ds->cam.cam_zoom, (p.angle + 90));
 		up_factor_other = ft_atoi(ds->array.array[(ds->array.array_i * (y + 1)) + x]) * (ds->cam.cam_zoom);
 		p.y0 -= up_factor;
 		p.y1 -= up_factor_other;
@@ -206,9 +206,22 @@ void	draw_array(t_mlx_data *ds, int x, int y, t_line_points p)
 	}
 }
 
+void	draw_line(t_mlx_data *ds, int x, int y, t_line_points p)
+{
+	t_line_points	save;
+
+	save = p;
+	p.x1 = p.x0 + get_line_x_coor(ds->cam.cam_zoom, p.angle);
+	p.y1 = p.y0 + get_line_y_coor(ds->cam.cam_zoom, p.angle);
+	draw_line_init(p, ds);
+	p.x1 = p.x0 + get_line_x_coor(ds->cam.cam_zoom, (p.angle + 90));
+	p.y1 = p.y0 + get_line_y_coor(ds->cam.cam_zoom, (p.angle + 90));
+	draw_line_init(p, ds);
+}
+
 int	check_key(int key_pressed, t_mlx_data *ds)
 {
-	static int	angle = 42;
+	static int	angle = 90;
 
 	printf("KEY = %d\n", key_pressed);
 	if (key_pressed == 65307)
@@ -235,15 +248,20 @@ int	check_key(int key_pressed, t_mlx_data *ds)
 		ds->cam.cam_zoom++;
 	else if (key_pressed == '-')
 		ds->cam.cam_zoom--;
+	else if (key_pressed == 'u')
+		ds->cam.x_rotation += 1;
+	else if (key_pressed == 'j')
+		ds->cam.x_rotation -= 1;
 	else
 		return (0);
 	ds->array.done = ft_calloc(sizeof(char), ds->array.array_i * ds->array.array_j);
 	printf("ANGLE = %d\n", angle);
 	if (ds->img_ptr)
-		mlx_destroy_image(ds->mlx_ptr, (void *)ds->img_ptr);
+		mlx_destroy_image(ds->mlx_ptr, ds->img_ptr);
 	ds->img_ptr = mlx_new_image(ds->mlx_ptr, 1920, 1080);
 	mlx_put_image_to_window(ds->mlx_ptr, ds->win_ptr, ds->img_ptr, 0, 0);
-	draw_array(ds, 0, 0, init_p(angle, ds->cam));
+	draw_array(ds, 0, 0, init_p(ds->cam.x_rotation, ds->cam));
+	//draw_line(ds, 0, 0, init_p(ds->cam.x_rotation, ds->cam));
 	free(ds->array.done);
 	return (0);
 }
@@ -297,6 +315,7 @@ void	init_ds(t_mlx_data *ds)
 	ds->cam.x_offset = 0;
 	ds->cam.y_offset = 0;
 	ds->cam.cam_zoom = 30;
+	ds->cam.x_rotation = 47;
 }
 
 int main(int argc, char **argv)
@@ -306,7 +325,7 @@ int main(int argc, char **argv)
 
 	parse_values(&ds, argv[1]);
 	ds.mlx_ptr = mlx_init();
-	ds.win_ptr = mlx_new_window(ds.mlx_ptr, 1920, 1080, "aaa");
+	ds.win_ptr = mlx_new_window(ds.mlx_ptr, 1020, 1020, "aaa");
 	ds.img_ptr = NULL;
 	init_ds(&ds);
 	mlx_loop_hook(ds.mlx_ptr, &test, &ds);

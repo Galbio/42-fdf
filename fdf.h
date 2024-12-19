@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 16:30:07 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/18 18:48:28 by gakarbou         ###   ########.fr       */
+/*   Updated: 2024/12/18 23:45:40 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_cam_control
 	int	x_offset;
 	int	y_offset;
 	int	cam_zoom;
+	int	x_rotation;
 }	t_cam_control;
 
 typedef struct s_mlx_data
