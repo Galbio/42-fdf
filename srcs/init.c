@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:30 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/30 01:12:45 by gakarbou         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:51:49 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,11 @@ void	init_mlx(t_mlx *ds, char *file)
 	ds->cam.off_y = 400;
 	ds->cam.zoom = 30;
 	ds->cam.height = 0;
+	init_points(ds);
 	fdf_draw(ds);
 	mlx_hook(ds->win_ptr, 2, 1L << 0, &fdf, ds);
+	mlx_hook(ds->win_ptr, 4, 1L << 2, &check_mouse, ds);
+	mlx_hook(ds->win_ptr, 17, 0, &close_fdf, ds);
 	mlx_loop_hook(ds->mlx_ptr, &aled, ds);
 	mlx_loop(ds->mlx_ptr);
 	mlx_destroy_display(ds->mlx_ptr);

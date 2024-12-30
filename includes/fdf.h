@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:06:03 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/30 01:05:36 by gakarbou         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:54:59 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,8 @@ void	fill_map(t_mlx *ds, int x, int y);
 int		aled(t_mlx *ds);
 void	fdf_draw(t_mlx *ds);
 int		fdf(int key, t_mlx *ds);
+
+int		check_mouse(int button, int x, int y, t_mlx *ds);
+int		close_fdf(t_mlx *ds);
 
 #endif

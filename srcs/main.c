@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:04:34 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/30 01:12:37 by gakarbou         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:36:37 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	aled(t_mlx *ds)
 void	fdf_draw(t_mlx *ds)
 {
 	init_points(ds);
-	change_y(ds, ds->cam.rotation[1]);
 	change_x(ds, ds->cam.rotation[0]);
+	change_y(ds, ds->cam.rotation[1]);
 	change_z(ds, ds->cam.rotation[2]);
 	ds->img = init_img(ds->mlx_ptr);
 	ds->array.done = ft_calloc(sizeof(char), ds->array.i * ds->array.j);
@@ -52,6 +52,8 @@ int	check_key(int key, t_mlx *ds)
 		ds->cam.zoom += 1 - (2 * (key == '-'));
 	else if (key == '1' || key == '2')
 		ds->cam.height += 1 - (2 * (key == '2'));
+	else if (key == 32)
+		return (0);
 	else
 		return (1);
 	return (0);
@@ -63,6 +65,7 @@ int	fdf(int key, t_mlx *ds)
 	{
 		mlx_destroy_image(ds->mlx_ptr, ds->img->ptr);
 		free(ds->img);
+		ds->img = NULL;
 	}
 	if (check_key(key, ds))
 		return (0);

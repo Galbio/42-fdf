@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:04 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/30 00:55:14 by gakarbou         ###   ########.fr       */
+/*   Updated: 2024/12/30 12:37:07 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ void	change_y(t_mlx *ds, int y)
 		while (++i < ds->array.i)
 		{
 			temp = ds->array.map[j][i].x;
-			temp2 = ft_atoi(ds->array.array[(j * ds->array.i) + i])
-				* (ds->cam.zoom + ds->cam.height);
+			temp2 = ds->array.map[j][i].z;
 			ds->array.map[j][i].x = round((temp * fcos(y)) + (temp2 * fsin(y)));
 			ds->array.map[j][i].z = round((-temp * fsin(y))
 					+ (temp2 * fcos(y)));

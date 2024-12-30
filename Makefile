@@ -6,7 +6,7 @@
 #    By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/29 02:58:46 by gakarbou          #+#    #+#              #
-#    Updated: 2024/12/30 00:54:28 by gakarbou         ###   ########.fr        #
+#    Updated: 2024/12/30 12:43:44 by gakarbou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRCS = main.c \
 	   init.c \
 	   utils.c \
 	   rotation.c \
+	   mouse_bonus.c \
 	   draw_array.c
 
 FILES = $(addprefix $(SRCS_DIR), $(SRCS))
