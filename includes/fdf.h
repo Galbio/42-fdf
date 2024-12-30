@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:06:03 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/29 18:27:15 by gakarbou         ###   ########.fr       */
+/*   Updated: 2024/12/30 01:05:36 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,28 @@ typedef struct s_mlx
 	t_array	array;
 }	t_mlx;
 
-void	create_cpy(t_mlx *ds);
+void	change_x(t_mlx *ds, int x);
+void	change_y(t_mlx *ds, int y);
+void	change_z(t_mlx *ds, int z);
+
+void	putpx(t_mlx *ds, float x, float y, int color);
+double	fcos(int angle);
+double	fsin(int angle);
+void	swap_points(t_line *p);
+void	free_array(t_mlx *ds);
+
+void	draw_line_init(t_mlx *ds, t_line p);
+void	draw_line(t_mlx *ds, t_line p, char incr_x, char incr_y);
+void	draw_array(t_mlx *ds, int x, int y);
+
+void	init_mlx(t_mlx *ds, char *filename);
 void	init_points(t_mlx *ds);
+void	*init_img(void *mlx_ptr);
+void	parse_map(char *filename, t_mlx *ds);
+void	fill_map(t_mlx *ds, int x, int y);
+
+int		aled(t_mlx *ds);
+void	fdf_draw(t_mlx *ds);
+int		fdf(int key, t_mlx *ds);
 
 #endif
