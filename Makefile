@@ -6,7 +6,7 @@
 #    By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/29 02:58:46 by gakarbou          #+#    #+#              #
-#    Updated: 2024/12/30 12:43:44 by gakarbou         ###   ########.fr        #
+#    Updated: 2024/12/30 14:58:10 by gakarbou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@ CC = gcc
 SRCS_DIR = srcs/
 HEAD_DIR = includes/
 LIBFT_DIR = libft/
-MLX_DIR = mlx/
+MLX_DIR = minilibx/
 OBJS_DIR = objs/
 
 MLX_FLAGS = -lX11 -lXext -lm
-FDF_LIBS = libft/libft.a mlx/libmlx_Linux.a
+FDF_LIBS = libft/libft.a minilibx/libmlx_Linux.a
 
 SRCS = main.c \
 	   init.c \
@@ -38,6 +38,8 @@ OBJS_FILES = $(addprefix $(OBJS_DIR), $(OBJS))
 all : $(NAME)
 
 $(NAME) : $(OBJS_FILES)
+	make -C minilibx/
+	make -C libft/
 	$(CC) $(OBJS_FILES) -I $(LIBFT_DIR)$(HEAD_DIR) -I $(MLX_DIR) -I $(HEAD_DIR) $(FDF_LIBS) $(MLX_FLAGS) -o $(NAME)
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
