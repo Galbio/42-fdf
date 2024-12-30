@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:04:34 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/30 14:36:37 by gakarbou         ###   ########.fr       */
+/*   Updated: 2024/12/30 14:59:33 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	fdf(int key, t_mlx *ds)
 	}
 	if (check_key(key, ds))
 		return (0);
+	ds->cam.zoom = ft_max(ds->cam.zoom, 0);
 	fdf_draw(ds);
 	return (0);
 }
