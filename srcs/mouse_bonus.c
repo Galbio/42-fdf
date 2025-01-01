@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 12:41:49 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/31 01:58:54 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/02 00:52:55 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	close_fdf(t_mlx *ds)
 
 int	check_mouse(int button, int x, int y, t_mlx *ds)
 {
+	(void)x;
+	(void)y;
 	if (button == 4)
 	{
 		ft_printf("Zoom = %d\n", ds->cam.zoom);
@@ -36,10 +38,9 @@ int	check_mouse(int button, int x, int y, t_mlx *ds)
 			ds->cam.zoom *= 1.1;
 	}
 	else if (button == 5)
-	{
 		ds->cam.zoom /= 1.1;
-	}
 	else
 		return (0);
 	fdf(32, ds);
+	return (0);
 }

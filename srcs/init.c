@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:30 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/01 14:15:47 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/02 00:51:14 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	init_points(t_mlx *ds)
 	while (++i < ds->array.j)
 		map[i] = ft_calloc(sizeof(t_point), ds->array.i);
 	ds->array.map = map;
-	fill_map(ds, 0, 0);
+	fill_map(ds);
 }
 
 void	init_mlx(t_mlx *ds, char *file)
@@ -90,7 +90,7 @@ void	parse_map(char *filename, t_mlx *ds)
 	free(joined_str);
 }
 
-void	fill_map(t_mlx *ds, int x, int y)
+void	fill_map(t_mlx *ds)
 {
 	int		i;
 	int		j;
@@ -105,7 +105,8 @@ void	fill_map(t_mlx *ds, int x, int y)
 		{
 			ds->array.map[j][i].x = (i - (ds->array.i / 2)) * ds->cam.zoom;
 			ds->array.map[j][i].y = (j - (ds->array.j / 2)) * ds->cam.zoom;
-			ds->array.map[j][i].z = ds->array.height[(j * height) + i] * ((ds->cam.zoom + (ds->cam.height * 1)) / 1);
+			ds->array.map[j][i].z = ds->array.height[(j * height) + i]
+				* ((ds->cam.zoom + (ds->cam.height * 1)) / 1);
 			get_color(ds, j, i);
 		}
 	}

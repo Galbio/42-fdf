@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:06:03 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/01 23:00:17 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/02 00:51:08 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	init_mlx(t_mlx *ds, char *filename);
 void	init_points(t_mlx *ds);
 void	*init_img(void *mlx_ptr);
 void	parse_map(char *filename, t_mlx *ds);
-void	fill_map(t_mlx *ds, int x, int y);
+void	fill_map(t_mlx *ds);
 
 int		aled(t_mlx *ds);
 void	fdf_draw(t_mlx *ds);

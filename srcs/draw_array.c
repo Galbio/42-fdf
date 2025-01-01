@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:21:36 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/01 23:30:09 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/02 00:49:59 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,17 @@ void	draw_line(t_mlx *ds, t_line p, char incr_x, char incr_y)
 			p.x0 += incr_x;
 		}
 		if (error2 <= dx)
-		{
 			error += dx;
+		if (error2 <= dx)
 			p.y0 += incr_y;
-		}
 		p.color += p.avg_color;
 	}
 }
 
-t_line	fill_values(t_mlx *ds, t_line p)
+t_line	fill_values(t_mlx *ds, t_line p, t_line save)
 {
-	t_line	save;
 	int		height[2];
 
-	save = p;
 	p.color = ds->array.map[(int)p.y0][(int)p.x0].color;
 	p.color2 = ds->array.map[(int)p.y1][(int)p.x1].color;
 	height[0] = ds->array.height[((int)p.y0 * ds->array.i) + (int)p.x0];
@@ -56,8 +53,6 @@ t_line	fill_values(t_mlx *ds, t_line p)
 	p.x1 = ds->cam.off_x + ds->array.map[(int)p.y1][(int)p.x1].x;
 	p.y0 = ds->cam.off_y + ds->array.map[(int)p.y0][(int)save.x0].y;
 	p.y1 = ds->cam.off_y + ds->array.map[(int)p.y1][(int)save.x1].y;
-	p.is_negative = 0;
-	p.avg_color = ft_abs(p.color - p.color2);
 	if (height[0] >= 0 && height[1] >= 0)
 	{
 		p.avg_color = ft_abs(p.color - p.color2);
@@ -79,7 +74,8 @@ void	draw_line_init(t_mlx *ds, t_line p)
 	char	incr_x;
 	char	incr_y;
 
-	p = fill_values(ds, p);
+	p.is_negative = 0;
+	p = fill_values(ds, p, p);
 	if ((p.x0 < 0 && p.x1 < 0) || (p.x0 > 1000 && p.x1 > 1000))
 		return ;
 	if ((p.y0 < 0 && p.y1 < 0) || (p.y0 > 1000 && p.y1 > 1000))

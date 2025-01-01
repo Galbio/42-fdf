@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 00:06:44 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/01 23:57:54 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/02 00:52:29 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,21 @@ void	get_color(t_mlx *ds, int y, int x)
 	int		height;
 	double	temp;
 
+	to_convert = ft_strchr(ds->array.array[(ds->array.i * y) + x], ',');
+	if (0 && !to_convert)
+		return ;
 	height = ds->array.height[(ds->array.i * y) + x];
 	if (!height)
 		ds->array.map[y][x].color = 0xFFFFFF;
-	else if (height >= 0)
+	else if (height > 0)
 	{
-		temp = (double)256 / ft_abs(ds->array.extr[1]);
-		ds->array.map[y][x].color = round(0xFFFFFF - ((temp * height * 256) - 1));
+		temp = (double)0xffff / ft_abs(ds->array.extr[1]);
+		ds->array.map[y][x].color = round(0xFFFFFF - (temp * height));
 	}
 	else
 	{
-		temp = (double)256 / ft_abs(ds->array.extr[0]);
-		ds->array.map[y][x].color = round(0x0000FF + ((temp * (ds->array.extr[0] - height) * 256) - 1));
+		temp = (double)0xffff / ft_abs(ds->array.extr[0]);
+		ds->array.map[y][x].color = round(0x0000FF + (temp
+					* (ds->array.extr[0] - height)));
 	}
 }

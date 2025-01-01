@@ -6,13 +6,14 @@
 #    By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/29 02:58:46 by gakarbou          #+#    #+#              #
-#    Updated: 2024/12/31 00:35:27 by gakarbou         ###   ########.fr        #
+#    Updated: 2025/01/02 00:50:40 by gakarbou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
 CC = gcc
+C_FLAGS = -Wall -Wextra -Werror
 
 SRCS_DIR = srcs/
 HEAD_DIR = includes/
@@ -41,10 +42,10 @@ all : $(NAME)
 $(NAME) : $(OBJS_FILES)
 	make -C minilibx/
 	make -C libft/
-	$(CC) $(OBJS_FILES) -I $(LIBFT_DIR)$(HEAD_DIR) -I $(MLX_DIR) -I $(HEAD_DIR) $(FDF_LIBS) $(MLX_FLAGS) -o $(NAME)
+	$(CC) $(C_FLAGS) $(OBJS_FILES) -I $(LIBFT_DIR)$(HEAD_DIR) -I $(MLX_DIR) -I $(HEAD_DIR) $(FDF_LIBS) $(MLX_FLAGS) -o $(NAME)
 
 $(OBJS_DIR)%.o : $(SRCS_DIR)%.c
-	$(CC) -I $(LIBFT_DIR)$(HEAD_DIR) -I $(MLX_DIR) -I $(HEAD_DIR) -c $< -o $@ -g
+	$(CC) $(C_FLAGS) -I $(LIBFT_DIR)$(HEAD_DIR) -I $(MLX_DIR) -I $(HEAD_DIR) -c $< -o $@ -g
 
 clean :
 	rm -f $(OBJS_FILES)
