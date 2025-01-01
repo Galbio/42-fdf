@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:06:03 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/30 14:54:59 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/01 23:00:17 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ typedef struct s_line
 	double	x1;
 	double	y0;
 	double	y1;
+	double	avg_color;
+	int		color;
+	int		color2;
+	char	is_negative;
 }	t_line;
 
 typedef struct s_img
@@ -47,11 +51,13 @@ typedef struct s_img
 
 typedef struct s_array
 {
-	int		i;
-	int		j;
-	char	**array;
-	char	*done;
-	t_point	**map;
+	int			i;
+	int			j;
+	char		**array;
+	char		*done;
+	int			*height;
+	int			extr[2];
+	t_point		**map;
 }	t_array;
 
 typedef struct s_cam
@@ -76,7 +82,7 @@ void	change_x(t_mlx *ds, int x);
 void	change_y(t_mlx *ds, int y);
 void	change_z(t_mlx *ds, int z);
 
-void	putpx(t_mlx *ds, float x, float y, int color);
+void	putpx(t_mlx *ds, t_line p);
 double	fcos(int angle);
 double	fsin(int angle);
 void	swap_points(t_line *p);
@@ -98,5 +104,8 @@ int		fdf(int key, t_mlx *ds);
 
 int		check_mouse(int button, int x, int y, t_mlx *ds);
 int		close_fdf(t_mlx *ds);
+
+void	init_height(t_mlx *ds);
+void	get_color(t_mlx *ds, int y, int x);
 
 #endif

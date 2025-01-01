@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 12:41:49 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/30 14:54:50 by gakarbou         ###   ########.fr       */
+/*   Updated: 2024/12/31 01:58:54 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int	check_mouse(int button, int x, int y, t_mlx *ds)
 			ds->cam.zoom *= 2;
 		else
 			ds->cam.zoom *= 1.1;
-		ds->cam.off_x += -x;
-		ds->cam.off_y += -y;
 	}
 	else if (button == 5)
 	{

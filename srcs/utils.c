@@ -6,29 +6,31 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:24 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/30 00:55:25 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/01 23:30:19 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	putpx(t_mlx *ds, float x, float y, int color)
+void	putpx(t_mlx *ds, t_line p)
 {
 	char	*pixel;
-	int		int_x;
-	int		int_y;
+	int		x;
+	int		y;
 
-	y += ds->cam.off_y;
-	x += ds->cam.off_x;
+	x = (int)p.x0;
+	y = (int)p.y0;
 	if (x < 0 || y < 0)
 		return ;
 	else if (x >= 1000 || y >= 1000)
 		return ;
-	int_x = (int)x;
-	int_y = (int)y;
-	pixel = ds->img->addr + (int_y * ds->img->size_line
-			+ int_x * (ds->img->bits_per_pixel / 8));
-	*(int *)pixel = color;
+	if (p.is_negative)
+		p.color = (p.color * 256) + 255;
+	else
+		p.color = (p.color + 0xFF0000);
+	pixel = ds->img->addr + (y * ds->img->size_line
+			+ x * (ds->img->bits_per_pixel / 8));
+	*(int *)pixel = p.color;
 }
 
 double	fcos(int angle)

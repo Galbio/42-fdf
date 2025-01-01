@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:30 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/30 14:51:49 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/01 14:15:47 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	init_mlx(t_mlx *ds, char *file)
 	ds->cam.off_y = 400;
 	ds->cam.zoom = 30;
 	ds->cam.height = 0;
-	init_points(ds);
 	fdf_draw(ds);
 	mlx_hook(ds->win_ptr, 2, 1L << 0, &fdf, ds);
 	mlx_hook(ds->win_ptr, 4, 1L << 2, &check_mouse, ds);
@@ -87,14 +86,17 @@ void	parse_map(char *filename, t_mlx *ds)
 	ds->array.array = ft_split(ft_str_replace_char(joined_str, '\n', ' '), ' ');
 	ds->array.j = len;
 	ds->array.i = array_len(ds->array.array) / ds->array.j;
+	init_height(ds);
 	free(joined_str);
 }
 
 void	fill_map(t_mlx *ds, int x, int y)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	int		height;
 
+	height = ds->array.i;
 	j = -1;
 	while (++j < ds->array.j)
 	{
@@ -103,8 +105,8 @@ void	fill_map(t_mlx *ds, int x, int y)
 		{
 			ds->array.map[j][i].x = (i - (ds->array.i / 2)) * ds->cam.zoom;
 			ds->array.map[j][i].y = (j - (ds->array.j / 2)) * ds->cam.zoom;
-			ds->array.map[j][i].z = ft_atoi(ds->array.array[(j * ds->array.i)
-					+ i]) * (ds->cam.zoom + ds->cam.height);
+			ds->array.map[j][i].z = ds->array.height[(j * height) + i] * ((ds->cam.zoom + (ds->cam.height * 1)) / 1);
+			get_color(ds, j, i);
 		}
 	}
 }
