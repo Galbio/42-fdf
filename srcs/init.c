@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:30 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/02 00:51:14 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/02 15:22:03 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,15 @@ void	init_mlx(t_mlx *ds, char *file)
 	ds->cam.off_x = 500;
 	ds->cam.off_y = 400;
 	ds->cam.zoom = 30;
+	if (ds->array.i * 30 > 900)
+		ds->cam.zoom = 20;
+	if (ds->array.i * 30 > 1300)
+		ds->cam.zoom = 5;
 	ds->cam.height = 0;
 	fdf_draw(ds);
-	mlx_hook(ds->win_ptr, 2, 1L << 0, &fdf, ds);
-	mlx_hook(ds->win_ptr, 4, 1L << 2, &check_mouse, ds);
-	mlx_hook(ds->win_ptr, 17, 0, &close_fdf, ds);
+	mlx_hook(ds->win_ptr, 2, 1L << 0, fdf, ds);
+	mlx_mouse_hook(ds->win_ptr, check_mouse, ds);
+	mlx_hook(ds->win_ptr, 17, 0, close_fdf, ds);
 	mlx_loop_hook(ds->mlx_ptr, &aled, ds);
 	mlx_loop(ds->mlx_ptr);
 	mlx_destroy_display(ds->mlx_ptr);
@@ -107,7 +111,7 @@ void	fill_map(t_mlx *ds)
 			ds->array.map[j][i].y = (j - (ds->array.j / 2)) * ds->cam.zoom;
 			ds->array.map[j][i].z = ds->array.height[(j * height) + i]
 				* ((ds->cam.zoom + (ds->cam.height * 1)) / 1);
-			get_color(ds, j, i);
+			ds->array.map[j][i].color = get_color(ds, j, i);
 		}
 	}
 }

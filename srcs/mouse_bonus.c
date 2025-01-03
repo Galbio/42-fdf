@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 12:41:49 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/02 00:52:55 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/03 16:19:51 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,7 @@
 
 int	close_fdf(t_mlx *ds)
 {
-	if (ds->img)
-	{
-		mlx_destroy_image(ds->mlx_ptr, ds->img->ptr);
-		free(ds->img);
-	}
-	mlx_destroy_window(ds->mlx_ptr, ds->win_ptr);
+	fdf(65307, ds);
 	return (0);
 }
 

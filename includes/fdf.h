@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:06:03 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/02 00:51:08 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/02 15:20:33 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,6 @@ int		check_mouse(int button, int x, int y, t_mlx *ds);
 int		close_fdf(t_mlx *ds);
 
 void	init_height(t_mlx *ds);
-void	get_color(t_mlx *ds, int y, int x);
+int		get_color(t_mlx *ds, int y, int x);
 
 #endif

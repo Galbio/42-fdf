@@ -6,7 +6,7 @@
 #    By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/04 16:12:41 by gakarbou          #+#    #+#              #
-#    Updated: 2024/12/26 02:59:07 by gakarbou         ###   ########.fr        #
+#    Updated: 2025/01/02 15:06:33 by gakarbou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ LIBFT_SRCS = ft_strlen.c \
 		ft_strncmp.c \
 		ft_strnstr.c \
 		ft_atoi.c \
+		ft_atoi_base.c \
 		ft_calloc.c \
 		ft_strdup.c \
 		ft_substr.c \
