@@ -6,11 +6,24 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:24 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/01 23:30:19 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/06 14:02:00 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int	update_color(t_line p)
+{
+	int	res;
+
+	p.cur_color = (float)p.cur_color / 100;
+	res = p.colors[0].red + ((p.colors[1].red - p.colors[0].red) * p.cur_color);
+	res = res * 256;
+	res += p.colors[0].green + ((p.colors[1].green - p.colors[0].green) * p.cur_color);
+	res = res * 256;
+	res += p.colors[0].blue + ((p.colors[1].blue - p.colors[0].blue) * p.cur_color);
+	return (res);
+}
 
 void	putpx(t_mlx *ds, t_line p)
 {
@@ -24,13 +37,9 @@ void	putpx(t_mlx *ds, t_line p)
 		return ;
 	else if (x >= 1000 || y >= 1000)
 		return ;
-	if (p.is_negative)
-		p.color = (p.color * 256) + 255;
-	else
-		p.color = (p.color + 0xFF0000);
 	pixel = ds->img->addr + (y * ds->img->size_line
 			+ x * (ds->img->bits_per_pixel / 8));
-	*(int *)pixel = p.color;
+	*(int *)pixel = update_color(p);
 }
 
 double	fcos(int angle)

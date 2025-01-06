@@ -6,16 +6,24 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:04:34 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/02 02:33:51 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/06 12:50:48 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	aled(t_mlx *ds)
+void	free_ds(t_mlx *ds)
 {
-	(void)ds;
-	return (0);
+	int	i;
+
+	i = -1;
+	mlx_destroy_window(ds->mlx_ptr, ds->win_ptr);
+	mlx_destroy_display(ds->mlx_ptr);
+	free(ds->mlx_ptr);
+	while (++i < (ds->array.j * ds->array.i))
+		free(ds->array.array[i]);
+	free(ds->array.height);
+	free(ds->array.array);
 }
 
 void	fdf_draw(t_mlx *ds)
@@ -35,8 +43,8 @@ int	check_key(int key, t_mlx *ds)
 {
 	if (key == 65307)
 	{
-		mlx_destroy_window(ds->mlx_ptr, ds->win_ptr);
-		return (1);
+		free_ds(ds);
+		exit(0);
 	}
 	else if (key == 'u' || key == 'j')
 		ds->cam.rotation[0] += 1 - (2 * (key == 'j'));
@@ -77,14 +85,9 @@ int	fdf(int key, t_mlx *ds)
 int	main(int argc, char **argv)
 {
 	t_mlx	ds;
-	int		i;
 
 	if (argc != 2)
 		return (1);
 	init_mlx(&ds, argv[1]);
-	i = -1;
-	while (++i < (ds.array.j * ds.array.i))
-		free(ds.array.array[i]);
-	free(ds.array.height);
-	return (free(ds.array.array), 0);
+	return (0);
 }

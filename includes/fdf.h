@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:06:03 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/02 15:20:33 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/05 20:28:56 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,19 @@
 # include "mlx.h"
 # include "libft.h"
 
+typedef struct s_col
+{
+	int	red;
+	int	green;
+	int	blue;
+}	t_col;
+
 typedef struct s_point
 {
 	double	x;
 	double	y;
 	double	z;
-	int		color;
+	t_col	color;
 }	t_point;
 
 typedef struct s_line
@@ -34,9 +41,9 @@ typedef struct s_line
 	double	x1;
 	double	y0;
 	double	y1;
+	t_col	colors[2];
+	double	cur_color;
 	double	avg_color;
-	int		color;
-	int		color2;
 	char	is_negative;
 }	t_line;
 
@@ -106,6 +113,7 @@ int		check_mouse(int button, int x, int y, t_mlx *ds);
 int		close_fdf(t_mlx *ds);
 
 void	init_height(t_mlx *ds);
-int		get_color(t_mlx *ds, int y, int x);
+t_col	get_color(t_mlx *ds, int y, int x);
+t_col	nb_to_rgb(int color);
 
 #endif

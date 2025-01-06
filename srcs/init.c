@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:30 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/02 15:22:03 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/05 22:29:10 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	init_points(t_mlx *ds)
 	t_point	**map;
 	int		i;
 
-	map = ft_calloc(sizeof(t_point *), ds->array.j);
+	map = malloc(sizeof(t_point *) * ds->array.j);
 	if (!map)
 		return ;
 	i = -1;
 	while (++i < ds->array.j)
-		map[i] = ft_calloc(sizeof(t_point), ds->array.i);
+		map[i] = malloc(sizeof(t_point) * ds->array.i);
 	ds->array.map = map;
 	fill_map(ds);
 }
@@ -47,10 +47,7 @@ void	init_mlx(t_mlx *ds, char *file)
 	mlx_hook(ds->win_ptr, 2, 1L << 0, fdf, ds);
 	mlx_mouse_hook(ds->win_ptr, check_mouse, ds);
 	mlx_hook(ds->win_ptr, 17, 0, close_fdf, ds);
-	mlx_loop_hook(ds->mlx_ptr, &aled, ds);
 	mlx_loop(ds->mlx_ptr);
-	mlx_destroy_display(ds->mlx_ptr);
-	free(ds->mlx_ptr);
 }
 
 void	*init_img(void *mlx_ptr)
