@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_count_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/12 16:45:25 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/07 15:33:31 by gakarbou         ###   ########.fr       */
+/*   Created: 2025/01/07 18:07:52 by gakarbou          #+#    #+#             */
+/*   Updated: 2025/01/07 18:09:33 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "libft.h"
 
-# include "libft.h"
+int	ft_count_char(char *str, char c)
+{
+	int	res;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4200000
-# endif
-
-char	*get_next_line(int fd);
-
-#endif
+	res = 0;
+	while (*str)
+	{
+		if (*str == c)
+			res++;
+		str++;
+	}
+	return (res);
+}

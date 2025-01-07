@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:04:32 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/02 15:06:14 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:10:15 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void		ft_lstiter(t_list *lst, void (*f)(void *));
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int			ft_lstmax(t_list *lst, int (*get_value)(t_list *));
 int			ft_lstmin(t_list *lst, int (*get_value)(t_list *));
+int			ft_count_char(char *str, char c);
 char		*ft_strndup(const char *s, size_t n);
 size_t		ft_strclen(const char *s, char c);
 size_t		ft_securelen(const char *s);

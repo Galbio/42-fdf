@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:30 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/05 22:29:10 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/07 18:10:41 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ void	init_points(t_mlx *ds)
 	while (++i < ds->array.j)
 		map[i] = malloc(sizeof(t_point) * ds->array.i);
 	ds->array.map = map;
-	fill_map(ds);
+	fill_colors(ds);
 }
 
 void	init_mlx(t_mlx *ds, char *file)
 {
+	write(1, "a", 1);
 	parse_map(file, ds);
 	ds->mlx_ptr = mlx_init();
 	ds->win_ptr = mlx_new_window(ds->mlx_ptr, 1000, 1000, "SdF");
@@ -43,6 +44,7 @@ void	init_mlx(t_mlx *ds, char *file)
 	if (ds->array.i * 30 > 1300)
 		ds->cam.zoom = 5;
 	ds->cam.height = 0;
+	init_points(ds);
 	fdf_draw(ds);
 	mlx_hook(ds->win_ptr, 2, 1L << 0, fdf, ds);
 	mlx_mouse_hook(ds->win_ptr, check_mouse, ds);
@@ -63,52 +65,39 @@ void	*init_img(void *mlx_ptr)
 	return (res);
 }
 
+void	fill_array(char *filename, t_mlx *ds, size_t size)
+{
+	char	*buffer;
+	int		fd;
+
+	buffer = malloc((size + 1) * sizeof(char));
+	fd = open(filename, O_RDONLY);
+	read(fd, buffer, size);
+	buffer[size] = 0;
+	ds->array.j = ft_count_char(buffer, '\n');
+	ds->array.array = ft_split(ft_str_replace_char(buffer, '\n', ' '), ' ');
+	ds->array.i = array_len(ds->array.array) / ds->array.j;
+	free(buffer);
+}
+
 void	parse_map(char *filename, t_mlx *ds)
 {
+	size_t	size[2];
 	int		fd;
-	int		len;
-	char	*joined_str;
-	char	*line;
+	char	buffer[2048];
 
+	size[1] = 0;
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		exit(0);
-	len = 0;
-	joined_str = NULL;
 	while (1)
 	{
-		line = get_next_line(fd);
-		if (!line)
+		size[0] = read(fd, buffer, sizeof(buffer));
+		if (!size[0])
 			break ;
-		len++;
-		joined_str = ft_securejoin(joined_str, line, 1);
-		free(line);
+		size[1] += size[0];
 	}
-	ds->array.array = ft_split(ft_str_replace_char(joined_str, '\n', ' '), ' ');
-	ds->array.j = len;
-	ds->array.i = array_len(ds->array.array) / ds->array.j;
+	close(fd);
+	fill_array(filename, ds, size[1]);
 	init_height(ds);
-	free(joined_str);
-}
-
-void	fill_map(t_mlx *ds)
-{
-	int		i;
-	int		j;
-	int		height;
-
-	height = ds->array.i;
-	j = -1;
-	while (++j < ds->array.j)
-	{
-		i = -1;
-		while (++i < ds->array.i)
-		{
-			ds->array.map[j][i].x = (i - (ds->array.i / 2)) * ds->cam.zoom;
-			ds->array.map[j][i].y = (j - (ds->array.j / 2)) * ds->cam.zoom;
-			ds->array.map[j][i].z = ds->array.height[(j * height) + i]
-				* ((ds->cam.zoom + (ds->cam.height * 1)) / 1);
-			ds->array.map[j][i].color = get_color(ds, j, i);
-		}
-	}
 }

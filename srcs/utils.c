@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:24 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/06 14:02:00 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/07 01:57:22 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ int	update_color(t_line p)
 	p.cur_color = (float)p.cur_color / 100;
 	res = p.colors[0].red + ((p.colors[1].red - p.colors[0].red) * p.cur_color);
 	res = res * 256;
-	res += p.colors[0].green + ((p.colors[1].green - p.colors[0].green) * p.cur_color);
+	res += p.colors[0].green + ((p.colors[1].green - p.colors[0].green)
+			* p.cur_color);
 	res = res * 256;
-	res += p.colors[0].blue + ((p.colors[1].blue - p.colors[0].blue) * p.cur_color);
+	res += p.colors[0].blue + ((p.colors[1].blue - p.colors[0].blue)
+			* p.cur_color);
 	return (res);
 }
 
@@ -50,17 +52,6 @@ double	fcos(int angle)
 double	fsin(int angle)
 {
 	return (sin(angle * (M_PI / 180)));
-}
-
-void	free_array(t_mlx *ds)
-{
-	int	i;
-
-	free(ds->array.done);
-	i = -1;
-	while (++i < ds->array.j)
-		free(ds->array.map[i]);
-	free(ds->array.map);
 }
 
 void	swap_points(t_line *p)

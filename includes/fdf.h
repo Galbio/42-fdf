@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:06:03 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/05 20:28:56 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/07 01:35:23 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_array
 	char		**array;
 	char		*done;
 	int			*height;
+	t_col		*colors;
 	int			extr[2];
 	t_point		**map;
 }	t_array;
@@ -85,7 +86,7 @@ typedef struct s_mlx
 	t_array	array;
 }	t_mlx;
 
-void	change_x(t_mlx *ds, int x);
+void	change_x(t_mlx *ds, int x, int y, int z);
 void	change_y(t_mlx *ds, int y);
 void	change_z(t_mlx *ds, int z);
 
@@ -113,7 +114,7 @@ int		check_mouse(int button, int x, int y, t_mlx *ds);
 int		close_fdf(t_mlx *ds);
 
 void	init_height(t_mlx *ds);
-t_col	get_color(t_mlx *ds, int y, int x);
 t_col	nb_to_rgb(int color);
+void	fill_colors(t_mlx *ds);
 
 #endif

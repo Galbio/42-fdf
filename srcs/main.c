@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:04:34 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/06 12:50:48 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/07 01:41:45 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,20 @@ void	free_ds(t_mlx *ds)
 		free(ds->array.array[i]);
 	free(ds->array.height);
 	free(ds->array.array);
+	free(ds->array.colors);
+	i = -1;
+	while (++i < ds->array.j)
+		free(ds->array.map[i]);
+	free(ds->array.map);
 }
 
 void	fdf_draw(t_mlx *ds)
 {
-	init_points(ds);
-	change_x(ds, ds->cam.rotation[0]);
-	change_y(ds, ds->cam.rotation[1]);
-	change_z(ds, ds->cam.rotation[2]);
+	change_x(ds, ds->cam.rotation[0], ds->cam.rotation[1], ds->cam.rotation[2]);
 	ds->img = init_img(ds->mlx_ptr);
 	ds->array.done = ft_calloc(sizeof(char), ds->array.i * ds->array.j);
 	draw_array(ds, 0, 0);
-	free_array(ds);
+	free(ds->array.done);
 	mlx_put_image_to_window(ds->mlx_ptr, ds->win_ptr, ds->img->ptr, 0, 0);
 }
 

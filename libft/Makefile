@@ -6,7 +6,7 @@
 #    By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/04 16:12:41 by gakarbou          #+#    #+#              #
-#    Updated: 2025/01/02 15:06:33 by gakarbou         ###   ########.fr        #
+#    Updated: 2025/01/07 18:09:45 by gakarbou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ LIBFT_SRCS = ft_strlen.c \
 		ft_iscmd.c \
 		ft_memcmd.c \
 		ft_write_fd.c \
+		ft_count_char.c 
 
 LIBFT_BONUS_SRCS = ft_lstiter_bonus.c \
 			 ft_lstmap_bonus.c \

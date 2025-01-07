@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:21:36 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/06 13:36:52 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/07 00:11:41 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,20 +36,21 @@ void	draw_line(t_mlx *ds, t_line p, char incr_x, char incr_y)
 			error += dx;
 		if (error2 <= dx)
 			p.y0 += incr_y;
-		p.cur_color	+= p.avg_color;
+		p.cur_color += p.avg_color;
 	}
 }
 
 t_line	fill_values(t_mlx *ds, t_line p, t_line save)
 {
-	p.colors[0] = (ds->array.map[(int)p.y0][(int)p.x0].color);
-	p.colors[1] = (ds->array.map[(int)p.y1][(int)p.x1].color);
+	p.colors[0] = (ds->array.colors[((int)p.y0 * ds->array.i) + (int)p.x0]);
+	p.colors[1] = (ds->array.colors[((int)p.y1 * ds->array.i) + (int)p.x1]);
 	p.x0 = ds->cam.off_x + ds->array.map[(int)p.y0][(int)p.x0].x;
 	p.x1 = ds->cam.off_x + ds->array.map[(int)p.y1][(int)p.x1].x;
 	p.y0 = ds->cam.off_y + ds->array.map[(int)p.y0][(int)save.x0].y;
 	p.y1 = ds->cam.off_y + ds->array.map[(int)p.y1][(int)save.x1].y;
 	p.cur_color = 0;
-	p.avg_color = (double)100 / ft_max(ft_abs(p.x0 - p.x1), ft_abs(p.y0 - p.y1));
+	p.avg_color = (double)100 / ft_max(ft_abs(p.x0 - p.x1),
+			ft_abs(p.y0 - p.y1));
 	return (p);
 }
 
