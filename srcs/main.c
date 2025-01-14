@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:04:34 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/07 01:41:45 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/13 22:06:00 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	free_ds(t_mlx *ds)
 
 void	fdf_draw(t_mlx *ds)
 {
-	change_x(ds, ds->cam.rotation[0], ds->cam.rotation[1], ds->cam.rotation[2]);
+	change_x(ds, ds->cam.rotation);
 	ds->img = init_img(ds->mlx_ptr);
 	ds->array.done = ft_calloc(sizeof(char), ds->array.i * ds->array.j);
 	draw_array(ds, 0, 0);
@@ -44,10 +44,9 @@ void	fdf_draw(t_mlx *ds)
 int	check_key(int key, t_mlx *ds)
 {
 	if (key == 65307)
-	{
-		free_ds(ds);
-		exit(0);
-	}
+		return (-1);
+	else if (key == 65507)
+		ds->is_grid ^= 1;
 	else if (key == 'u' || key == 'j')
 		ds->cam.rotation[0] += 1 - (2 * (key == 'j'));
 	else if (key == 'i' || key == 'k')
@@ -71,14 +70,23 @@ int	check_key(int key, t_mlx *ds)
 
 int	fdf(int key, t_mlx *ds)
 {
+	int	ret;
+
 	if (ds->img)
 	{
 		mlx_destroy_image(ds->mlx_ptr, ds->img->ptr);
 		free(ds->img);
 		ds->img = NULL;
 	}
-	if (check_key(key, ds))
+	ret = check_key(key, ds);
+	if (ret > 0)
 		return (0);
+	else if (ret < 0)
+	{
+		free_ds(ds);
+		exit(0);
+	}
+	ft_printf("Grid = %d\n", ds->is_grid);
 	ds->cam.zoom = ft_max(ds->cam.zoom, 0);
 	fdf_draw(ds);
 	return (0);
@@ -89,7 +97,7 @@ int	main(int argc, char **argv)
 	t_mlx	ds;
 
 	if (argc != 2)
-		return (1);
+		return (perror("Invalid argument(s).\nUsage : ./fdf [.fdf file]\n"), 1);
 	init_mlx(&ds, argv[1]);
 	return (0);
 }

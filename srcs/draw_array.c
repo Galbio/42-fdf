@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:21:36 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/07 00:11:41 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/09 18:09:57 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ t_line	fill_values(t_mlx *ds, t_line p, t_line save)
 {
 	p.colors[0] = (ds->array.colors[((int)p.y0 * ds->array.i) + (int)p.x0]);
 	p.colors[1] = (ds->array.colors[((int)p.y1 * ds->array.i) + (int)p.x1]);
-	p.x0 = ds->cam.off_x + ds->array.map[(int)p.y0][(int)p.x0].x;
-	p.x1 = ds->cam.off_x + ds->array.map[(int)p.y1][(int)p.x1].x;
-	p.y0 = ds->cam.off_y + ds->array.map[(int)p.y0][(int)save.x0].y;
-	p.y1 = ds->cam.off_y + ds->array.map[(int)p.y1][(int)save.x1].y;
+	p.x0 = round(ds->cam.off_x + ds->array.map[(int)p.y0][(int)p.x0].x);
+	p.x1 = round(ds->cam.off_x + ds->array.map[(int)p.y1][(int)p.x1].x);
+	p.y0 = round(ds->cam.off_y + ds->array.map[(int)p.y0][(int)save.x0].y);
+	p.y1 = round(ds->cam.off_y + ds->array.map[(int)p.y1][(int)save.x1].y);
 	p.cur_color = 0;
 	p.avg_color = (double)100 / ft_max(ft_abs(p.x0 - p.x1),
 			ft_abs(p.y0 - p.y1));

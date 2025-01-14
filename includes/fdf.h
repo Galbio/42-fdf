@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:06:03 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/07 01:35:23 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/13 22:02:49 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <math.h>
 # include <fcntl.h>
+# include <stdio.h>
 # include "mlx.h"
 # include "libft.h"
 
@@ -73,8 +74,8 @@ typedef struct s_cam
 	int		off_y;
 	int		off_x;
 	int		rotation[3];
-	int		height;
-	int		zoom;
+	double	height;
+	double	zoom;
 }	t_cam;
 
 typedef struct s_mlx
@@ -84,11 +85,10 @@ typedef struct s_mlx
 	t_img	*img;
 	t_cam	cam;
 	t_array	array;
+	char	is_grid;
 }	t_mlx;
 
-void	change_x(t_mlx *ds, int x, int y, int z);
-void	change_y(t_mlx *ds, int y);
-void	change_z(t_mlx *ds, int z);
+void	change_x(t_mlx *ds, int rotation[3]);
 
 void	putpx(t_mlx *ds, t_line p);
 double	fcos(int angle);

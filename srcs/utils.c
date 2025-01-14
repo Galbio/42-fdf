@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:24 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/07 01:57:22 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/07 19:13:40 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	update_color(t_line p)
 	res = res * 256;
 	res += p.colors[0].blue + ((p.colors[1].blue - p.colors[0].blue)
 			* p.cur_color);
+	if (!res)
+		return (1);
 	return (res);
 }
 
@@ -41,7 +43,8 @@ void	putpx(t_mlx *ds, t_line p)
 		return ;
 	pixel = ds->img->addr + (y * ds->img->size_line
 			+ x * (ds->img->bits_per_pixel / 8));
-	*(int *)pixel = update_color(p);
+	if (*(int *)pixel == 0)
+		*(int *)pixel = update_color(p);
 }
 
 double	fcos(int angle)

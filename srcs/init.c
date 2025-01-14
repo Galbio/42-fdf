@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:30 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/07 18:10:41 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/13 22:04:02 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	init_points(t_mlx *ds)
 
 void	init_mlx(t_mlx *ds, char *file)
 {
-	write(1, "a", 1);
 	parse_map(file, ds);
 	ds->mlx_ptr = mlx_init();
 	ds->win_ptr = mlx_new_window(ds->mlx_ptr, 1000, 1000, "SdF");
@@ -44,10 +43,11 @@ void	init_mlx(t_mlx *ds, char *file)
 	if (ds->array.i * 30 > 1300)
 		ds->cam.zoom = 5;
 	ds->cam.height = 0;
+	ds->is_grid = 0;
 	init_points(ds);
 	fdf_draw(ds);
 	mlx_hook(ds->win_ptr, 2, 1L << 0, fdf, ds);
-	mlx_mouse_hook(ds->win_ptr, check_mouse, ds);
+	mlx_hook(ds->win_ptr, 4, 1L << 2, check_mouse, ds);
 	mlx_hook(ds->win_ptr, 17, 0, close_fdf, ds);
 	mlx_loop(ds->mlx_ptr);
 }
