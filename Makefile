@@ -6,7 +6,7 @@
 #    By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/29 02:58:46 by gakarbou          #+#    #+#              #
-#    Updated: 2025/01/02 00:50:40 by gakarbou         ###   ########.fr        #
+#    Updated: 2025/01/16 15:10:12 by gakarbou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ FDF_LIBS = libft/libft.a minilibx/libmlx_Linux.a
 SRCS = main.c \
 	   init.c \
 	   utils.c \
+	   utils2.c \
 	   color.c \
 	   rotation.c \
 	   mouse_bonus.c \

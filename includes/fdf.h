@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:06:03 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/13 22:02:49 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:40:58 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_line
 	t_col	colors[2];
 	double	cur_color;
 	double	avg_color;
-	char	is_negative;
 }	t_line;
 
 typedef struct s_img
@@ -74,9 +73,17 @@ typedef struct s_cam
 	int		off_y;
 	int		off_x;
 	int		rotation[3];
+	int		rot_grid[3];
 	double	height;
 	double	zoom;
 }	t_cam;
+
+typedef struct s_bonus
+{
+	char	is_grid;
+	char	draw_lines;
+	char	colors;
+}	t_bonus;
 
 typedef struct s_mlx
 {
@@ -85,7 +92,7 @@ typedef struct s_mlx
 	t_img	*img;
 	t_cam	cam;
 	t_array	array;
-	char	is_grid;
+	t_bonus	bon;
 }	t_mlx;
 
 void	change_x(t_mlx *ds, int rotation[3]);
@@ -109,6 +116,7 @@ void	fill_map(t_mlx *ds);
 int		aled(t_mlx *ds);
 void	fdf_draw(t_mlx *ds);
 int		fdf(int key, t_mlx *ds);
+void	free_ds(t_mlx *ds);
 
 int		check_mouse(int button, int x, int y, t_mlx *ds);
 int		close_fdf(t_mlx *ds);

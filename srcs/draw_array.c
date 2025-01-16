@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:21:36 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/09 18:09:57 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:59:18 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,28 @@ void	draw_line(t_mlx *ds, t_line p, char incr_x, char incr_y)
 {
 	double	dx;
 	double	dy;
-	double	error;
-	double	error2;
+	double	error[2];
 
 	dx = ft_abs(p.x0 - p.x1);
 	dy = ft_abs(p.y0 - p.y1) * -1;
-	error = dx + dy;
-	while (1)
+	error[0] = dx + dy;
+	while (1 && ds->bon.draw_lines)
 	{
 		putpx(ds, p);
 		if ((p.x0 == p.x1) && (p.y0 == p.y1))
 			break ;
-		error2 = error * 2;
-		if (error2 >= dy)
-			error += dy;
-		if (error2 >= dy)
+		error[1] = error[0] * 2;
+		if (error[1] >= dy)
+			error[0] += dy;
+		if (error[1] >= dy)
 			p.x0 += incr_x;
-		if (error2 <= dx)
-			error += dx;
-		if (error2 <= dx)
+		if (error[1] <= dx)
+			error[0] += dx;
+		if (error[1] <= dx)
 			p.y0 += incr_y;
 		p.cur_color += p.avg_color;
 	}
+	putpx(ds, p);
 }
 
 t_line	fill_values(t_mlx *ds, t_line p, t_line save)
@@ -51,6 +51,13 @@ t_line	fill_values(t_mlx *ds, t_line p, t_line save)
 	p.cur_color = 0;
 	p.avg_color = (double)100 / ft_max(ft_abs(p.x0 - p.x1),
 			ft_abs(p.y0 - p.y1));
+	if (!ds->bon.draw_lines)
+	{
+		putpx(ds, p);
+		swap_points(&p);
+		p.colors[0] = p.colors[1];
+		putpx(ds, p);
+	}
 	return (p);
 }
 
@@ -60,6 +67,8 @@ void	draw_line_init(t_mlx *ds, t_line p)
 	char	incr_y;
 
 	p = fill_values(ds, p, p);
+	if (!ds->bon.draw_lines)
+		return ;
 	if ((p.x0 < 0 && p.x1 < 0) || (p.x0 > 1000 && p.x1 > 1000))
 		return ;
 	if ((p.y0 < 0 && p.y1 < 0) || (p.y0 > 1000 && p.y1 > 1000))

@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:30 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/13 22:04:02 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:00:17 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ void	init_points(t_mlx *ds)
 	fill_colors(ds);
 }
 
-void	init_mlx(t_mlx *ds, char *file)
+void	init_mlx_cam(t_mlx *ds)
 {
-	parse_map(file, ds);
-	ds->mlx_ptr = mlx_init();
-	ds->win_ptr = mlx_new_window(ds->mlx_ptr, 1000, 1000, "SdF");
 	ds->cam.rotation[0] = 45;
-	ds->cam.rotation[1] = -36;
+	ds->cam.rotation[1] = -45;
 	ds->cam.rotation[2] = 30;
+	ds->cam.rot_grid[0] = 0;
+	ds->cam.rot_grid[1] = 0;
+	ds->cam.rot_grid[2] = 0;
 	ds->cam.off_x = 500;
 	ds->cam.off_y = 400;
 	ds->cam.zoom = 30;
@@ -43,7 +43,17 @@ void	init_mlx(t_mlx *ds, char *file)
 	if (ds->array.i * 30 > 1300)
 		ds->cam.zoom = 5;
 	ds->cam.height = 0;
-	ds->is_grid = 0;
+	ds->bon.is_grid = 0;
+	ds->bon.draw_lines = 1;
+	ds->bon.colors = 1;
+}
+
+void	init_mlx(t_mlx *ds, char *file)
+{
+	parse_map(file, ds);
+	ds->mlx_ptr = mlx_init();
+	ds->win_ptr = mlx_new_window(ds->mlx_ptr, 1000, 1000, "SdF");
+	init_mlx_cam(ds);
 	init_points(ds);
 	fdf_draw(ds);
 	mlx_hook(ds->win_ptr, 2, 1L << 0, fdf, ds);
@@ -63,41 +73,4 @@ void	*init_img(void *mlx_ptr)
 	res->addr = mlx_get_data_addr(res->ptr, &(res)->bits_per_pixel,
 			&(res)->size_line, &(res)->endian);
 	return (res);
-}
-
-void	fill_array(char *filename, t_mlx *ds, size_t size)
-{
-	char	*buffer;
-	int		fd;
-
-	buffer = malloc((size + 1) * sizeof(char));
-	fd = open(filename, O_RDONLY);
-	read(fd, buffer, size);
-	buffer[size] = 0;
-	ds->array.j = ft_count_char(buffer, '\n');
-	ds->array.array = ft_split(ft_str_replace_char(buffer, '\n', ' '), ' ');
-	ds->array.i = array_len(ds->array.array) / ds->array.j;
-	free(buffer);
-}
-
-void	parse_map(char *filename, t_mlx *ds)
-{
-	size_t	size[2];
-	int		fd;
-	char	buffer[2048];
-
-	size[1] = 0;
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		exit(0);
-	while (1)
-	{
-		size[0] = read(fd, buffer, sizeof(buffer));
-		if (!size[0])
-			break ;
-		size[1] += size[0];
-	}
-	close(fd);
-	fill_array(filename, ds, size[1]);
-	init_height(ds);
 }

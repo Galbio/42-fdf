@@ -6,16 +6,18 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:24 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/07 19:13:40 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:33:17 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	update_color(t_line p)
+int	update_color(t_line p, t_mlx *ds)
 {
 	int	res;
 
+	if (!ds->bon.colors)
+		return (0xFFFFFF);
 	p.cur_color = (float)p.cur_color / 100;
 	res = p.colors[0].red + ((p.colors[1].red - p.colors[0].red) * p.cur_color);
 	res = res * 256;
@@ -44,7 +46,7 @@ void	putpx(t_mlx *ds, t_line p)
 	pixel = ds->img->addr + (y * ds->img->size_line
 			+ x * (ds->img->bits_per_pixel / 8));
 	if (*(int *)pixel == 0)
-		*(int *)pixel = update_color(p);
+		*(int *)pixel = update_color(p, ds);
 }
 
 double	fcos(int angle)

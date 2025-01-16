@@ -6,34 +6,18 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:04:34 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/13 22:06:00 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/16 15:40:36 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	free_ds(t_mlx *ds)
-{
-	int	i;
-
-	i = -1;
-	mlx_destroy_window(ds->mlx_ptr, ds->win_ptr);
-	mlx_destroy_display(ds->mlx_ptr);
-	free(ds->mlx_ptr);
-	while (++i < (ds->array.j * ds->array.i))
-		free(ds->array.array[i]);
-	free(ds->array.height);
-	free(ds->array.array);
-	free(ds->array.colors);
-	i = -1;
-	while (++i < ds->array.j)
-		free(ds->array.map[i]);
-	free(ds->array.map);
-}
-
 void	fdf_draw(t_mlx *ds)
 {
-	change_x(ds, ds->cam.rotation);
+	if (!ds->bon.is_grid)
+		change_x(ds, ds->cam.rotation);
+	else
+		change_x(ds, ds->cam.rot_grid);
 	ds->img = init_img(ds->mlx_ptr);
 	ds->array.done = ft_calloc(sizeof(char), ds->array.i * ds->array.j);
 	draw_array(ds, 0, 0);
@@ -41,17 +25,32 @@ void	fdf_draw(t_mlx *ds)
 	mlx_put_image_to_window(ds->mlx_ptr, ds->win_ptr, ds->img->ptr, 0, 0);
 }
 
+int	check_key2(int key, t_mlx *ds)
+{
+	if (key == 'p')
+		ds->bon.draw_lines ^= 1;
+	else if (key == 'c')
+		ds->bon.colors ^= 1;
+	else
+		return (1);
+	return (0);
+}
+
 int	check_key(int key, t_mlx *ds)
 {
-	if (key == 65307)
-		return (-1);
+	if (key == 65307 || key == 32)
+		return (-1 + (key == 32));
 	else if (key == 65507)
-		ds->is_grid ^= 1;
-	else if (key == 'u' || key == 'j')
+		ds->bon.is_grid ^= 1;
+	else if ((key == 65361 || key == 65363) && ds->bon.is_grid)
+		ds->cam.rot_grid[1] += 90 - (180 * (key == 65361));
+	else if ((key == 65362 || key == 65364) && ds->bon.is_grid)
+		ds->cam.rot_grid[0] += 90 - (180 * (key == 65364));
+	else if ((key == 'u' || key == 'j') && !ds->bon.is_grid)
 		ds->cam.rotation[0] += 1 - (2 * (key == 'j'));
-	else if (key == 'i' || key == 'k')
+	else if ((key == 'i' || key == 'k') && !ds->bon.is_grid)
 		ds->cam.rotation[1] += 1 - (2 * (key == 'k'));
-	else if (key == 'o' || key == 'l')
+	else if ((key == 'o' || key == 'l') && !ds->bon.is_grid)
 		ds->cam.rotation[2] += 1 - (2 * (key == 'l'));
 	else if (key == 's' || key == 'w')
 		ds->cam.off_y += 10 - (20 * (key == 'w'));
@@ -61,10 +60,8 @@ int	check_key(int key, t_mlx *ds)
 		ds->cam.zoom += 1 - (2 * (key == '-'));
 	else if (key == '1' || key == '2')
 		ds->cam.height += 1 - (2 * (key == '2'));
-	else if (key == 32)
-		return (0);
 	else
-		return (1);
+		return (check_key2(key, ds));
 	return (0);
 }
 
@@ -86,7 +83,6 @@ int	fdf(int key, t_mlx *ds)
 		free_ds(ds);
 		exit(0);
 	}
-	ft_printf("Grid = %d\n", ds->is_grid);
 	ds->cam.zoom = ft_max(ds->cam.zoom, 0);
 	fdf_draw(ds);
 	return (0);
