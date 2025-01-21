@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:55:04 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/12 23:32:27 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/17 18:24:44 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	rotate_part_two(t_mlx *ds, int i, int j, int rotation[3])
 
 	temp[1] = (j - (ds->array.j / 2)) * ds->cam.zoom;
 	temp[2] = ds->array.height[(j * ds->array.i) + i]
-		* (((float)ds->cam.zoom / 10) + ds->cam.height);
+		* (((float)ds->cam.zoom / 10) + (ds->cam.height * ds->cam.zoom));
 	ds->array.map[j][i].y = round((temp[1] * fcos(rotation[0]))
 			+ (-temp[2] * fsin(rotation[0])));
 	ds->array.map[j][i].z = round((temp[1] * fsin(rotation[0]))

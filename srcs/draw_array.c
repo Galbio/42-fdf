@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/30 00:21:36 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/16 15:59:18 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/20 20:08:18 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,27 +82,30 @@ void	draw_line_init(t_mlx *ds, t_line p)
 	draw_line(ds, p, incr_x, incr_y);
 }
 
-void	draw_array(t_mlx *ds, int x, int y)
+void	draw_array(t_mlx *ds, int j)
 {
 	t_line	p;
+	int		i;
 
-	if (ds->array.done[(y * ds->array.i) + x])
-		return ;
-	ds->array.done[(y * ds->array.i) + x] = 1;
-	p.x0 = x + 0.2;
-	p.y0 = y + 0.2;
-	if (x < (ds->array.i - 1))
+	while (++j < (ds->array.j))
 	{
-		p.x1 = x + 1.2;
-		p.y1 = y + 0.2;
-		draw_line_init(ds, p);
-		draw_array(ds, x + 1, y);
-	}
-	if (y < (ds->array.j - 1))
-	{
-		p.x1 = x + 0.2;
-		p.y1 = y + 1.2;
-		draw_line_init(ds, p);
-		draw_array(ds, x, y + 1);
+		i = -1;
+		while (++i < (ds->array.i))
+		{
+			p.x0 = i;
+			p.y0 = j;
+			if ((i + 1) < (ds->array.i))
+			{
+				p.x1 = i + 1;
+				p.y1 = p.y0;
+				draw_line_init(ds, p);
+			}
+			if ((j + 1) < (ds->array.j))
+			{
+				p.x1 = p.x0;
+				p.y1 = j + 1;
+				draw_line_init(ds, p);
+			}
+		}
 	}
 }

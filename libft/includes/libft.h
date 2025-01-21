@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 12:04:32 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/07 18:10:15 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/20 20:10:42 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void		ft_striteri(char *s, void (*f)(unsigned int, char*));
 int	long		ft_max(int a, int b);
 int	long		ft_min(int a, int b);
 int long	ft_abs(int a);
-unsigned	ft_log(int long nb, unsigned len);
+int long	ft_log(int long nb, unsigned int len);
 
 t_list		*ft_lstnew(void *content);
 void		ft_lstadd_front(t_list **lst, t_list *new);

@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/10 14:52:46 by gakarbou          #+#    #+#             */
-/*   Updated: 2024/12/26 03:08:41 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/20 20:11:58 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int long	ft_max(int a, int b)
 	return (b);
 }
 
-unsigned int	ft_log(int long nb, unsigned int len)
+int long	ft_log(int long nb, unsigned int len)
 {
 	if (nb < 0)
 		return (1 + ft_log(-nb, len));

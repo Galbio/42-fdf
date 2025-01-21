@@ -6,14 +6,14 @@
 #    By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/12/29 02:58:46 by gakarbou          #+#    #+#              #
-#    Updated: 2025/01/16 15:10:12 by gakarbou         ###   ########.fr        #
+#    Updated: 2025/01/16 18:34:04 by gakarbou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 
 CC = gcc
-C_FLAGS = -Wall -Wextra -Werror
+C_FLAGS = -Wall -Wextra -Werror -g
 
 SRCS_DIR = srcs/
 HEAD_DIR = includes/

@@ -6,7 +6,7 @@
 /*   By: gakarbou <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/25 16:06:03 by gakarbou          #+#    #+#             */
-/*   Updated: 2025/01/16 15:40:58 by gakarbou         ###   ########.fr       */
+/*   Updated: 2025/01/20 20:08:33 by gakarbou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,14 @@ typedef struct s_bonus
 	char	is_grid;
 	char	draw_lines;
 	char	colors;
+	int		mouse_info[3];
 }	t_bonus;
 
 typedef struct s_mlx
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	char	must_draw;
 	t_img	*img;
 	t_cam	cam;
 	t_array	array;
@@ -105,7 +107,7 @@ void	free_array(t_mlx *ds);
 
 void	draw_line_init(t_mlx *ds, t_line p);
 void	draw_line(t_mlx *ds, t_line p, char incr_x, char incr_y);
-void	draw_array(t_mlx *ds, int x, int y);
+void	draw_array(t_mlx *ds, int j);
 
 void	init_mlx(t_mlx *ds, char *filename);
 void	init_points(t_mlx *ds);
@@ -119,6 +121,7 @@ int		fdf(int key, t_mlx *ds);
 void	free_ds(t_mlx *ds);
 
 int		check_mouse(int button, int x, int y, t_mlx *ds);
+int		mouse_stop(int button, int x, int y, t_mlx *ds);
 int		close_fdf(t_mlx *ds);
 
 void	init_height(t_mlx *ds);
